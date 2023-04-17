@@ -52,6 +52,7 @@
 			"urlCheck": false,
 			"checkSiteMap": false
 		},
+		"optimization": {"subPackages": true},
 		"usingComponents": true
 	},
 	"mp-alipay": {
