@@ -1,16 +1,30 @@
 <template>
-  <div class="my">my</div>
+  <view class="my-container">
+    <!-- 用户未登录时，显示登录组件 -->
+    <MyAccess v-if="!token"></MyAccess>
+    <!-- 用户登录后，显示用户信息组件 -->
+    <MyUser v-else></MyUser>
+  </view>
 </template>
 
 <script>
+import MyAccess from '../../components/myAccess/myAccess.vue'
+import MyUser from '../../components/myUser/myUser.vue'
+import badgeMix from '../../mixins/tabbarBadge'
+// 1. 从 vuex 中按需导入 mapState 辅助函数
+import { mapState } from 'vuex'
 export default {
-  components: {},
+  components: { MyAccess, MyUser },
   data() {
     return {}
   },
-  computed: {},
+  computed: {
+     // 2. 从 m_user 模块中导入需要的 token 字符串
+     ...mapState('user', ['token']),
+  },
   methods: {},
   watch: {},
+  mixins: [badgeMix],
 
   // 页面周期函数--监听页面加载
   onLoad() {},
@@ -33,4 +47,9 @@ export default {
 } 
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+page,
+.my-container {
+  height: 100%;
+}
+</style>

@@ -1,6 +1,9 @@
 <template>
   <!-- 轮播图 -->
   <view>
+    <view class="search-box">
+      <mySearch @click="gotoSearch"></mySearch>
+    </view>
     <swiper :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000" :circular="true">
       <!-- 循环渲染轮播图的 item 项 -->
       <swiper-item v-for="(item, i) in swiperList" :key="i">
@@ -28,7 +31,8 @@
           </navigator>
           <!-- 右侧 4 个小图片的盒子 -->
           <view class="right-img-box">
-            <navigator :url="item2.url" class="right-img-item" v-for="(item2, i2) in item.product_list" :key="i2" v-if="i2 !== 0">
+            <navigator :url="item2.url" class="right-img-item" v-for="(item2, i2) in item.product_list" :key="i2"
+              v-if="i2 !== 0">
               <image :src="item2.image_src" mode="widthFix" :style="{ width: item2.image_width + 'rpx' }"></image>
             </navigator>
           </view>
@@ -39,6 +43,7 @@
 </template>
 
 <script>
+import badgeMix from '../../mixins/tabbarBadge'
 export default {
   components: {},
   data() {
@@ -80,9 +85,15 @@ export default {
         })
       }
 
+    },
+    gotoSearch() {
+      uni.navigateTo({
+        url: '/pages/sub/search/search'
+      })
     }
   },
   watch: {},
+  mixins: [badgeMix],
 
   // 页面周期函数--监听页面加载
   onLoad() {
@@ -146,5 +157,14 @@ swiper {
 .floor-img-box {
   display: flex;
   padding-left: 10rpx;
+}
+
+.search-box {
+  // 设置定位效果为“吸顶”
+  position: sticky;
+  // 吸顶的“位置”
+  top: 0;
+  // 提高层级，防止被轮播图覆盖
+  z-index: 999;
 }
 </style>

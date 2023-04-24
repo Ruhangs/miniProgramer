@@ -1,5 +1,6 @@
 <template>
   <view>
+    <mySearch  @click="gotoSearch"></mySearch>
     <view class="scroll-view-container">
       <!-- 左侧的滚动视图区域 -->
       <scroll-view class="left-scroll-view" scroll-y :style="{ height: wh + 'px' }">
@@ -29,6 +30,8 @@
 </template>
 
 <script>
+import badgeMix from '../../mixins/tabbarBadge'
+
 export default {
   components: {},
   data() {
@@ -56,20 +59,25 @@ export default {
     },
     gotoGoodsList(item3){
       uni.navigateTo({
-        url:'/sub/goods_list/index?cid=' + item3.cat_id
+        url:'/pages/sub/goods_list/index?cid=' + item3.cat_id
       })
+    },
+    gotoSearch() {
+      uni.navigateTo({
+       url: '/pages/sub/search/search'  // 需要修改
+     })
     }
   },
   watch: {},
+  mixins: [badgeMix],
 
   // 页面周期函数--监听页面加载
   onLoad() {
     // 获取当前系统的信息
     const sysInfo = uni.getSystemInfoSync()
     // 为 wh 窗口可用高度动态赋值
-    this.wh = sysInfo.windowHeight
+    this.wh = sysInfo.windowHeight - 50
     this.getCateList()
-
   },
   // 页面周期函数--监听页面初次渲染完成
   onReady() { },
